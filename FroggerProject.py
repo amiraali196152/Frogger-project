@@ -7,23 +7,26 @@ init()
 
 # Screen Stuff
 width = 600
-height = 400
+height = 700
 screen = display.set_mode((width, height))
 display.set_caption('Frogger')
 endGame = False
 
 mixer.music.load("C:/Users/Homework/Desktop/MirasStuff/pythonCodes/FroggerStuff/music.mp3")
-mixer.music.play()
+mixer.music.play(-1)
 
-frogPic = image.load("C:/Users/Homework/Desktop/MirasStuff/pythonCodes/FroggerStuff/frog.png")
+#frog setup
+frogPic = image.load("C:/Users/Homework/Desktop/MirasStuff/pythonCodes/FroggerStuff/frog.png").convert_alpha() 
 frogPic = transform.scale(frogPic, (40,40))
-
 frogRect = Rect(100,0,40,40)
 
+# car stuff
 cars = []
 cars.append(Rect(200,200,40,40))
 
-
+# Player movement variables
+px = 0
+py = 0
 
 # Game Loop
 while endGame == False:
@@ -31,9 +34,25 @@ while endGame == False:
     for e in event.get():
         if e.type == QUIT:
             endGame = True
-        if e.type == KEYDOWN:
-          if e.key == K_s:
-            frogRect.move_ip(0,5)
+        elif e.type == KEYDOWN:
+            if e.key == K_LEFT:
+                px = -3  # Move left
+            elif e.key == K_RIGHT:
+                px = 3  # Move right
+            elif e.key == K_UP:
+                py = -3  # Move up
+            elif e.key == K_DOWN:
+                py = 3  # Move down
+        elif e.type == KEYUP:
+            if e.key == K_LEFT or e.key == K_RIGHT:
+                px = 0  # Stop horizontal movement when left or right key is released
+            elif e.key == K_UP or e.key == K_DOWN:
+                py = 0  # Stop vertical movement when up or down key is released
+
+  # Update player position
+    frogRect.move_ip(px, py)
+    frogRect.x = max(0, min(width - frogRect.width, frogRect.x))  # Keep within bounds
+    frogRect.y = max(0, min(height - frogRect.height, frogRect.y))
 
     screen.fill((0,0,0))
     draw.rect(screen, (255,255,255), (0,0,width,20))
