@@ -36,22 +36,22 @@ while endGame == False:
             endGame = True
         elif e.type == KEYDOWN:
             if e.key == K_LEFT:
-                px = -3  # Move left
+                px = -3  # left
             elif e.key == K_RIGHT:
-                px = 3  # Move right
+                px = 3  # right
             elif e.key == K_UP:
-                py = -3  # Move up
+                py = -3  # up
             elif e.key == K_DOWN:
-                py = 3  # Move down
+                py = 3  # down
         elif e.type == KEYUP:
             if e.key == K_LEFT or e.key == K_RIGHT:
-                px = 0  # Stop horizontal movement when left or right key is released
+                px = 0  # Stop horizontal movement 
             elif e.key == K_UP or e.key == K_DOWN:
-                py = 0  # Stop vertical movement when up or down key is released
+                py = 0  # Stop vertical movement
 
   # Update player position
     frogRect.move_ip(px, py)
-    frogRect.x = max(0, min(width - frogRect.width, frogRect.x))  # Keep within bounds
+    frogRect.x = max(0, min(width - frogRect.width, frogRect.x))  
     frogRect.y = max(0, min(height - frogRect.height, frogRect.y))
 
     screen.fill((0,0,0))
